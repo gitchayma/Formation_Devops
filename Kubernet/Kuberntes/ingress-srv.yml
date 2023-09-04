@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1    #Docs: https://kubernetes.io/docs/concepts/services-networking/ingress/
+kind: Ingress                      # Attention: il faut installer le contromeur ingress dans le cluster
+metadata:
+  name: myingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:                  #expl: Autoroute on a des paneaux qui nous dirigent ds plusieurs sorties
+    - host: localhost           # host: la bard de paneau
+      http:
+        paths:                  # Le contenue de paneau: chemin
+          - pathType: Prefix   
+            path: /
+            backend:            # dirigé vers le service en question
+              service:
+                name: nginx-service
+                port: 
+                  number: 8080
+  
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

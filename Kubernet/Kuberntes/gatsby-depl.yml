@@ -1,0 +1,29 @@
+# Path: Kube/gatsby-srv.yml
+# Creer un deploiement   #4 mots clés: apiVersion, kind,metadata,spec. 
+apiVersion: apps/v1          # Les biblio d'objets intégré par kubernet, l'objet de déploiment es apps.
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 2        # concerne le --deploiment--  # réplicats: Nombre de pods que nous souhaitons crée
+  selector:             #je veux une version de ce conteneur C1
+    matchLabels:
+     name: mynginx
+  template:         ## C1: Recette du --Pod--, même code que pour un objet "Pod" first-pod.yml
+    metadata:
+      name: mynginx
+      labels:            # label: Etiquette qui identifie le pod
+        name: mynginx
+    spec:
+      containers:
+      - name: mynginx
+        image: nginx 
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+    
+
+
