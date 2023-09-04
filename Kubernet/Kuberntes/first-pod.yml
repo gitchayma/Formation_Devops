@@ -1,0 +1,29 @@
+apiVersion: v1        # But: on veut crée un pod 
+kind: Pod
+metadata:
+  name: mynginx
+  labels:            # Etiquette, qui est le label(munginx) qui identifie mon pods (mynginx)
+    name: mynginx
+spec:
+  containers:
+  - name: mynginx
+    image: nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##    resources:
+##      limits:
+##        memory: "128Mi"
+##        cpu: "500m"
+   

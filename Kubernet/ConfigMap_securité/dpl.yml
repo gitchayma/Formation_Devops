@@ -1,0 +1,40 @@
+
+# But: déployer l'application flask
+apiVersion: apps/v1              # Les biblio d'objets intégré par kubernet, l'objet de déploiment es apps.
+kind: Deployment
+metadata:
+  name: myflask-deployment
+  labels:
+    app: myflask-deployment
+spec:
+  replicas: 2        # concerne le --deploiment--  # réplicats: Nombre de pods que nous souhaitons crée
+  selector:             #je veux une version de ce conteneur C1
+    matchLabels:
+     app: myflask-template
+  template:         ## C1: Recette du --Pod--, même code que pour un objet "Pod" first-pod.yml
+    metadata:
+      labels:            # label: Etiquette qui identifie le pod
+        app: myflask-template
+    spec:
+      containers:
+      - name: flask-container
+        imagePullPolicy: IfNotPresent
+        image: flask1                                           # Appeller l'image Docker creer dans DockerFile
+        env:                                                   # Define the environment variable
+        - name: KEY1                                           # Aller chercher le KEY de l'app.py
+                                                               # from the key name in the ConfigMap.
+          valueFrom:
+            configMapKeyRef:
+              name: flask-data                                  # Aller chercher comment j'ai nommé configMap.yml
+              key: key1                                         # Aller chercher key de configMap
+        - name: PASSWORD                                        # Aller chercher le PASSWORD de l'app.py
+          valueFrom:
+            secretKeyRef:
+              name: mysecret                                         # Aller chercher comment j'ai nommé secret.yml
+              key: password                                         # Aller chercher key de secret.yml
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80

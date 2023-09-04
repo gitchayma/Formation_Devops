@@ -1,0 +1,15 @@
+# Creer un service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-srv
+spec:
+  type: NodePort     # Le type de service par défault c'est ClusterIP. Il faut précisé le nodePort 
+  selector:          # qui va chercher le label qui est dans gatsby_deploy.yml 
+    app: myflask-template      
+  ports:
+    - protocol: TCP
+      port: 8080              # port de l'extérieur: service
+      targetPort: 80          # port de pod
+       
